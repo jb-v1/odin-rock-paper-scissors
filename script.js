@@ -2,27 +2,33 @@
 function getComputerChoice() {
     let randomNum = Math.floor(Math.random()*3);
     let choice;
-    console.log(randomNum);
     switch(randomNum){
         case 0:
-            choice = "Rock";
+            choice = "rock";
             break;
         case 1:
-            choice = "Paper";
+            choice = "paper";
             break;
         case 2:
-            choice = "Scissors";
+            choice = "scissors";
             break;
     }
     return choice;
 }
 
-console.log(getComputerChoice());
-
-
 // get computer choice
+const computerSelection = getComputerChoice();
+console.log(computerSelection);
 
 // get VALID user choice. If invalid, repeat prompt
+let rawInput;
+while(rawInput != "rock" && rawInput != "paper" && rawInput != "scissors"){
+    let askUser = prompt("Rock, paper or scissors?");
+    rawInput = askUser.toLowerCase();
+    console.log(rawInput);
+}
+const playerSelection = rawInput;
+console.log(playerSelection);
 
 // a round of RPS. Get both user and computer choice.
 	// if equal, tie.
