@@ -16,25 +16,21 @@ function getComputerChoice() {
     return choice;
 }
 
-// get computer choice
-const computerSelection = getComputerChoice();
-console.log("computer chose: " + computerSelection);
-
 // get VALID user choice. If invalid, repeat prompt
-let rawInput;
-while (rawInput != "rock" && rawInput != "paper" && rawInput != "scissors") {
-    let askUser = prompt("Rock, paper or scissors?");
-    rawInput = askUser.toLowerCase();
-}
-const playerSelection = rawInput;
-
-// Track score
-let playerScore = 0;
-let computerScore = 0;
+function getUserInput() {
+    let rawInput;
+    while (rawInput != "rock" && rawInput != "paper" && rawInput != "scissors") {
+        let askUser = prompt("Rock, paper or scissors?");
+        rawInput = askUser.toLowerCase();
+    }
+    return rawInput;
+};
 
 // Play One Round
-function playRound(player, computer){
+function playRound(player, computer) {
     let roundMessage;
+    let playerPoint = 0;
+    let computerPoint = 0;
     switch (true) {
         // if equal, tie.
         case (player == computer):
@@ -44,29 +40,44 @@ function playRound(player, computer){
         case (player == "rock" || player == "scissors") 
         && (computer == "rock" || computer == "scissors"):
             roundMessage = "Rock beats scissors.";
-            if (player == "rock") {playerScore++} else {computerScore++};
+            if (player == "rock") {playerPoint++} else {computerPoint++};
             break;
         // scissors vs paper match. Scissors wins.
         case (player == "scissors" || player == "paper") 
         && (computer == "scissors" || computer == "paper"):
             roundMessage = "Scissors beats paper.";
-            if (player == "scissors") {playerScore++} else {computerScore++};
+            if (player == "scissors") {playerPoint++} else {computerPoint++};
             break;
         // paper vs rock match. Paper wins.
         case (player == "paper" || player == "rock") 
         && (computer == "paper" || computer == "rock"):
             roundMessage = "Paper beats rock.";
-            if (player == "paper") {playerScore++} else {computerScore++};
+            if (player == "paper") {playerPoint++} else {computerPoint++};
             break;
     };
-    if (playerScore > computerScore){
+    if (playerPoint > computerPoint){
         console.log("You Win! " + roundMessage);
-        return playerScore;
-    }else if (computerScore > playerScore) {
+        return playerScore++;
+    }else if (computerPoint > playerPoint) {
         console.log("You Lose! " + roundMessage);
-        return computerScore;
+        return computerScore++;
     }
 };
 
-// run
-playRound(playerSelection, computerSelection);
+// Track score 
+let playerScore = 0;
+let computerScore = 0;
+
+// play five rounds
+function game() {
+    for (let i = 0; i < 5; i++) {
+        playRound(getUserInput(), getComputerChoice());
+    }
+    if (playerScore > computerScore) {
+        console.log("Player wins the game!");
+    }else {
+        console.log("Computer wins the game!");
+    }
+}
+
+game();
