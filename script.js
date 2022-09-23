@@ -56,11 +56,13 @@ function playRound(player, computer) {
             break;
     };
     if (playerPoint > computerPoint){
-        console.log("You Win! " + roundMessage);
-        return playerScore++;
+        playerScore = playerScore + playerPoint;
+        console.log("You Win! " + roundMessage + " Player Score: " + playerScore + " Computer Score: " + computerScore);
+        return playerScore;
     }else if (computerPoint > playerPoint) {
-        console.log("You Lose! " + roundMessage);
-        return computerScore++;
+        computerScore = computerScore + computerPoint;
+        console.log("You Lose! " + roundMessage + " Player Score: " + playerScore + " Computer Score: " + computerScore);
+        return computerScore;
     }
 };
 
@@ -70,7 +72,7 @@ let computerScore = 0;
 
 // play five rounds
 function game() {
-    for (let i = 0; i < 5; i++) {
+    while (playerScore != 3 && computerScore != 3) {
         playRound(getUserInput(), getComputerChoice());
     }
     if (playerScore > computerScore) {
@@ -80,4 +82,5 @@ function game() {
     }
 }
 
+alert("First to three.");
 game();
