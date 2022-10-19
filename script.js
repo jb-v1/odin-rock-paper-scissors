@@ -16,25 +16,16 @@ function getComputerChoice() {
     return choice;
 }
 
-// get VALID user choice. If invalid, repeat prompt
-function getUserInput() {
-    let rawInput;
-    while (rawInput != "rock" && rawInput != "paper" && rawInput != "scissors") {
-        let askUser = prompt("Rock, paper or scissors?");
-        rawInput = askUser.toLowerCase();
-    }
-    return rawInput;
-};
-
 // Play One Round
-function playRound(player, computer) {
-    let roundMessage;
+function playRound(player) {
+    const computer = getComputerChoice();
     let playerPoint = 0;
     let computerPoint = 0;
+    let roundMessage;
     switch (true) {
         // if equal, tie.
         case (player == computer):
-            console.log("Tie.");
+            roundResult = "Tie";
             break;
         // rock vs scissors match. Rock wins.  
         case (player == "rock" || player == "scissors") 
@@ -56,10 +47,10 @@ function playRound(player, computer) {
             break;
     };
     if (playerPoint > computerPoint){
-        console.log("You Win! " + roundMessage);
+        roundResult = "You Win! " + roundMessage;
         return playerScore++;
     }else if (computerPoint > playerPoint) {
-        console.log("You Lose! " + roundMessage);
+        roundResult = "You Lose! " + roundMessage;
         return computerScore++;
     }
 };
@@ -67,17 +58,20 @@ function playRound(player, computer) {
 // Track score 
 let playerScore = 0;
 let computerScore = 0;
+let roundResult;
 
-// play five rounds
-function game() {
-    for (let i = 0; i < 5; i++) {
-        playRound(getUserInput(), getComputerChoice());
-    }
-    if (playerScore > computerScore) {
-        console.log("Player wins the game!");
-    }else {
-        console.log("Computer wins the game!");
-    }
-}
+const choices = document.querySelectorAll("button");
 
-game();
+choices.forEach(playerChoice => {playerChoice.addEventListener('click', 
+    () => {
+        playRound(playerChoice.className); 
+        newDiv.textContent = roundResult;
+        document.body.appendChild(newDiv);
+    })
+});
+
+const newDiv = document.createElement('div');
+
+
+
+
