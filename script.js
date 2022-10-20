@@ -46,7 +46,7 @@ function playRound(player) {
             if (player == "paper") {playerPoint++} else {computerPoint++};
             break;
     };
-    if (playerPoint > computerPoint){
+    if (playerPoint > computerPoint) {
         roundResult = "You Win! " + roundMessage;
         return playerScore++;
     }else if (computerPoint > playerPoint) {
@@ -55,23 +55,47 @@ function playRound(player) {
     }
 };
 
+// first to five
+function game() {
+    playRound(this.className);
+    showResult.textContent = roundResult;
+    document.body.appendChild(showResult);
+
+    // update scores
+    showPlayer.textContent = "Player Score: " + playerScore;
+    showComputer.textContent = "Computer Score " + computerScore;
+
+    theWinner();
+};
+
+function theWinner() {
+    if (playerScore === 5 || computerScore === 5) {
+        choices.forEach(playerChoice => {playerChoice.removeEventListener('click', game);});
+        if (playerScore > computerScore) {
+            showWinner.textContent = "PLAYER wins the game. Congratulations 🎉";
+            document.body.appendChild(showWinner);
+        } else {
+            showWinner.textContent = "COMPUTER wins the game. Better luck next time.";
+            document.body.appendChild(showWinner);
+        };
+    };
+};
+
 // Track score 
 let playerScore = 0;
 let computerScore = 0;
-let roundResult;
+let roundResult; // replaced console.log message on playRound
+let testVar;
 
+// UI
 const choices = document.querySelectorAll("button");
+choices.forEach(playerChoice => {playerChoice.addEventListener('click', game);});
 
-choices.forEach(playerChoice => {playerChoice.addEventListener('click', 
-    () => {
-        playRound(playerChoice.className); 
-        newDiv.textContent = roundResult;
-        document.body.appendChild(newDiv);
-    })
-});
+const showPlayer = document.querySelector('.player');
+const showComputer = document.querySelector('.computer');
 
-const newDiv = document.createElement('div');
-
+const showResult = document.createElement('div');
+const showWinner = document.createElement('div');
 
 
 
